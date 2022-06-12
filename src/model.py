@@ -1,6 +1,6 @@
 import torch
 import torch.nn.functional as F
-from .utils import create_loss_fn
+from utils import create_loss_fn
 
 
 class MLP(torch.nn.Module):
