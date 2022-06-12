@@ -62,7 +62,7 @@ def create_scheduler(optimizer, config):
                                                                T_max=num_epochs)
     elif config.optimizer.scheduler == 'mul':
         scheduler = torch.optim.lr_scheduler.MultiplicativeLR(optimizer,
-                                                               lr_lambda = lambda epoch: 0.7)
+                                                               lr_lambda = lambda epoch: 0.95)
     else:
         raise ValueError('Scheduler {} not supported'.format(
             config.optimizer.scheduler))
