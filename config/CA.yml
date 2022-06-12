@@ -7,8 +7,10 @@ data:
 model: 
   name: ConditionalAutoencoder
   in_channels: 94
-  out_channels: 20
-  hidden_channels: [32, 16, 8, 6]
+  # out_channels: 20
+  # hidden_channels: [32, 16, 8, 6]
+  out_channels: 6
+  hidden_channels: [32, 16, 8]
   dropout: 0.1
   device: "cuda:0"
   loss_fn: MSELoss
