@@ -1,3 +1,4 @@
+from sklearn.model_selection import learning_curve
 from munch import DefaultMunch
 import argparse
 import torch
@@ -35,7 +36,7 @@ def load_config():
 def create_optimizer(config, model):
     lr = config.optimizer.lr
     if config.optimizer.name == 'Adam':
-        return torch.optim.Adam(model.parameters(), lr=lr)
+        return torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
     elif config.optimizer.name == 'SGD':
         return torch.optim.SGD(model.parameters(), lr=lr, weight_decay=1e-5)
     else:

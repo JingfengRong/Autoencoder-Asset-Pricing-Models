@@ -15,7 +15,7 @@ model:
   device: "cuda:0"
   loss_fn: MSELoss
 optimizer:
-  name: SGD
+  name: Adam
   lr: 0.005
   scheduler: cos
 train:
