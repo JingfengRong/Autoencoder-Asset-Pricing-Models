@@ -6,4 +6,5 @@ setup(
     description='My first Python library',
     author='Me',
     license='MIT',
+    setup_requires=['munch']
 )
