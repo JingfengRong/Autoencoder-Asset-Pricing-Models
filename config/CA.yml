@@ -15,9 +15,9 @@ model:
   device: "cuda:0"
   loss_fn: MSELoss
 optimizer:
-  name: Adam
+  name: SGD
   lr: 0.005
-  scheduler: cos
+  scheduler: mul
 train:
   batch_size: 16
   num_epochs: 500

@@ -37,7 +37,7 @@ def create_optimizer(config, model):
     if config.optimizer.name == 'Adam':
         return torch.optim.Adam(model.parameters(), lr=lr)
     elif config.optimizer.name == 'SGD':
-        return torch.optim.SGD(model.parameters(), lr=lr)
+        return torch.optim.SGD(model.parameters(), lr=lr, weight_decay=1e-5)
     else:
         raise ValueError(
             "Unknown optimizer type {}".format(config.optimizer.name))
@@ -60,6 +60,9 @@ def create_scheduler(optimizer, config):
     elif config.optimizer.scheduler == 'cos':
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer,
                                                                T_max=num_epochs)
+    elif config.optimizer.scheduler == 'mul':
+        scheduler = torch.optim.lr_scheduler.MultiplicativeLR(optimizer,
+                                                               lr_lambda = 0.01)
     else:
         raise ValueError('Scheduler {} not supported'.format(
             config.optimizer.scheduler))
