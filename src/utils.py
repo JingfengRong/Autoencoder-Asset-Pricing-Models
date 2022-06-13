@@ -66,7 +66,7 @@ def create_scheduler(optimizer, config):
                                                                lr_lambda = lambda epoch: 0.95)
     elif config.optimizer.scheduler == 'exp':
         scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer,
-                                                               gamma = 0.98)
+                                                               gamma = 0.995)
     else:
         raise ValueError('Scheduler {} not supported'.format(
             config.optimizer.scheduler))
