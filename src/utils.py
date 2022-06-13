@@ -64,6 +64,9 @@ def create_scheduler(optimizer, config):
     elif config.optimizer.scheduler == 'mul':
         scheduler = torch.optim.lr_scheduler.MultiplicativeLR(optimizer,
                                                                lr_lambda = lambda epoch: 0.95)
+    elif config.optimizer.scheduler == 'exp':
+        scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer,
+                                                               gamma = 0.9)
     else:
         raise ValueError('Scheduler {} not supported'.format(
             config.optimizer.scheduler))
