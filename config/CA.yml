@@ -2,10 +2,10 @@ title: CA3
 log_dir: log
 seeds: [233, 42, 1135]
 data:
-  path: data
+  path: secondsplit
   num_workers: 4
 model: 
-  name: ConditionalAutoencoder
+  name: ConditionalAutoencoderCC
   in_channels: 94
   # out_channels: 20
   # hidden_channels: [32, 16, 8, 6]

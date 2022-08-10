@@ -47,9 +47,9 @@ class MLP(torch.nn.Module):
                    config.model.out_channels, config.model.dropout, loss_fn)
 
 
-class ConditionalAutoencoder(torch.nn.Module):
+class ConditionalAutoencoderCC(torch.nn.Module):
     def __init__(self, in_channels, hidden_channels, dropout, loss_fn):
-        super(ConditionalAutoencoder, self).__init__()
+        super(ConditionalAutoencoderCC, self).__init__()
         self.beta = MLP(
             in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
         self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
@@ -81,7 +81,7 @@ class ConditionalAutoencoder(torch.nn.Module):
 
 
 model_dict = {
-    'ConditionalAutoencoder': ConditionalAutoencoder,
+    'ConditionalAutoencoderCC': ConditionalAutoencoderCC,
 }
 
 

@@ -6,10 +6,14 @@ import os.path as osp
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, path, split='train'):
         super().__init__()
+        # self.features = np.load(
+        #     osp.join(path, '{}_features.npy'.format(split)), allow_pickle=True)
+        # self.fret = np.load(
+        #     osp.join(path, '{}_fret.npy'.format(split)), allow_pickle=True)
         self.features = np.load(
-            osp.join(path, '{}_features.npy'.format(split)), allow_pickle=True)
+            osp.join(path, 'input_{}.npy'.format(split)), allow_pickle=True)
         self.fret = np.load(
-            osp.join(path, '{}_fret.npy'.format(split)), allow_pickle=True)
+            osp.join(path, 'output_{}.npy'.format(split)), allow_pickle=True)
 
     def __len__(self):
         return len(self.fret)
@@ -35,6 +39,6 @@ def create_loader(config, split):
 
 def create_loaders(config):
     loaders = {}
-    for split in ['train', 'val', 'test']:
+    for split in ['train', 'valid', 'test']:
         loaders[split] = create_loader(config, split)
     return loaders
