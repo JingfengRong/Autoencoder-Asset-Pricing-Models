@@ -6,7 +6,7 @@ data:
   num_workers: 4
 model: 
   name: ConditionalAutoencoderCC
-  in_channels: 94
+  in_channels: 81
   # out_channels: 20
   # hidden_channels: [32, 16, 8, 6]
   out_channels: 6
