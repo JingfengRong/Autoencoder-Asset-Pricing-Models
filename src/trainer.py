@@ -54,8 +54,8 @@ class Trainer:
         total_y_preds, total_y_trues = [], []
         for batch in self.loaders[split]:
             xs, y_trues = batch
-            xs, y_trues = [x.to(self.device) for x in xs], [
-                y.to(self.device) for y in y_trues]
+            xs, y_trues = [x.to(self.device).float() for x in xs], [
+                y.to(self.device).float() for y in y_trues]
             ret_dict = self.model(xs, y_trues)
             loss = ret_dict['loss']
             y_preds = ret_dict['y_preds']
