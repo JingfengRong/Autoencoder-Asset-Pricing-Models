@@ -71,7 +71,7 @@ class Trainer:
     def train(self):
         for self.epoch in range(1, self.config.train.num_epochs + 1):
             train_loss, train_metric = self.train_epoch()
-            val_loss, val_metric = self.eval_epoch('val')
+            val_loss, val_metric = self.eval_epoch('valid')
             test_loss, test_metric = self.eval_epoch('test')
             self.logger.write_epoch({
                 "epoch": self.epoch,

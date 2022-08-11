@@ -66,7 +66,7 @@ class ConditionalAutoencoderCC(torch.nn.Module):
             r_true.unsqueeze_(1)
             # z: (N, P), r_true: (N,)
             beta = self.beta(z)  # beta: (N, K)
-            x = torch.inverse(z.T @ z) @ z.T @ r_true  # x: (K,1)
+            x = torch.linalg.pinv(z.T @ z) @ z.T @ r_true  # x: (K,1)
             factor = self.factor(x.view(1, -1))  # factor: (1, K)
             r_pred = beta @ factor.view(-1, 1)  # r_pred: (N, 1)
             loss += self.loss_fn(r_pred, r_true)

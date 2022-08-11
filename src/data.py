@@ -24,8 +24,12 @@ class Dataset(torch.utils.data.Dataset):
 
 def collate_fn(batch):
     features, fret = zip(*batch)
-    features = [torch.from_numpy(f) for f in features]
-    fret = [torch.from_numpy(f) for f in fret]
+    try:
+        features = [torch.from_numpy(f) for f in features]
+        fret = [torch.from_numpy(f) for f in fret]
+    except:
+        for f in features:
+            print(f.shape)
     return features, fret
 
 

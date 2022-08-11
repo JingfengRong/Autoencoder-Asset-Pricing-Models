@@ -1,0 +1,29 @@
+data:
+    num_workers: 4
+    path: 8split
+evaluator: r2_total
+log_dir: log
+model:
+    device: cpu
+    dropout: 0.1
+    hidden_channels:
+    - 32
+    - 16
+    - 8
+    in_channels: 79
+    loss_fn: MSELoss
+    name: ConditionalAutoencoderCC
+    out_channels: 6
+optimizer:
+    lr: 0.005
+    name: Adam
+    scheduler: exp
+seeds:
+- 233
+- 42
+- 1135
+title: CA3
+train:
+    batch_size: 16
+    drop_last: false
+    num_epochs: 300

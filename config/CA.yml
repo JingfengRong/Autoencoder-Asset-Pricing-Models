@@ -2,11 +2,11 @@ title: CA3
 log_dir: log
 seeds: [233, 42, 1135]
 data:
-  path: secondsplit
+  path: 8split
   num_workers: 4
 model: 
   name: ConditionalAutoencoderCC
-  in_channels: 81
+  in_channels: 79
   # out_channels: 20
   # hidden_channels: [32, 16, 8, 6]
   out_channels: 6
@@ -21,6 +21,6 @@ optimizer:
   scheduler: exp
 train:
   batch_size: 16
-  num_epochs: 500
+  num_epochs: 300
   drop_last: False
 evaluator: r2_total
