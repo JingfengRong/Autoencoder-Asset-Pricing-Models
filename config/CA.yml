@@ -2,7 +2,7 @@ title: CACC
 log_dir: log
 seeds: [233, 42, 1135]
 data:
-  path: 9split
+  path: tensplit
   num_workers: 2
 model: 
   name: ConditionalAutoencoderCC
@@ -23,6 +23,6 @@ optimizer:
   scheduler: exp
 train:
   batch_size: 16
-  num_epochs: 300
+  num_epochs: 500
   drop_last: False
 evaluator: r2_total
