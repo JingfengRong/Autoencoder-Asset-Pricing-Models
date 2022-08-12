@@ -2,7 +2,7 @@ title: CACC
 log_dir: log
 seeds: [233, 42, 1135]
 data:
-  path: 8split
+  path: 9split
   num_workers: 2
 model: 
   name: ConditionalAutoencoderCC
