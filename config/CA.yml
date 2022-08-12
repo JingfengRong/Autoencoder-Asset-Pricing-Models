@@ -3,7 +3,7 @@ log_dir: log
 seeds: [233, 42, 1135]
 data:
   path: 8split
-  num_workers: 4
+  num_workers: 2
 model: 
   name: ConditionalAutoencoderCC
   in_channels: 79
