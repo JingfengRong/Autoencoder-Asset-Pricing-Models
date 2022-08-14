@@ -10,7 +10,7 @@ model:
   # out_channels: 20
   # hidden_channels: [32, 16, 8, 6]
   out_channels: 5
-  hidden_channels: [32, 16, 8]
+  hidden_channels: [32, 16, 6]
   # out_channels: 50
   # hidden_channels: [70,60]
   dropout: 0.1
@@ -23,6 +23,6 @@ optimizer:
   scheduler: exp
 train:
   batch_size: 16
-  num_epochs: 500
+  num_epochs: 600
   drop_last: False
 evaluator: r2_total
