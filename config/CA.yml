@@ -10,7 +10,7 @@ model:
   # out_channels: 20
   # hidden_channels: [32, 16, 8, 6]
   out_channels: 3
-  hidden_channels: [32, 16, 2]
+  hidden_channels: [32, 16, 7]
   # out_channels: 50
   # hidden_channels: [70,60]
   dropout: 0.1
@@ -20,7 +20,7 @@ model:
 optimizer:
   name: Adam
   lr: 0.005
-  scheduler: exp
+  scheduler: cos
 train:
   batch_size: 16
   num_epochs: 1000
