@@ -12,7 +12,7 @@ model:
   # hidden_channels: [32, 6]
   # CACC
   out_channels: 1
-  hidden_channels: [32, 16, 6]
+  hidden_channels: [32, 16, 5]
   dropout: 0.1
   device: "cuda:0"
   # device: cpu
