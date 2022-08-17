@@ -53,6 +53,7 @@ class ConditionalAutoencoderCC(torch.nn.Module):
         self.beta = MLP(
             in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
         self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
+        self.conditionalfactor = torch.nn.Linear(in_channels + hidden_channels[-1], hidden_channels[-1])
         self.loss_fn = loss_fn
 
     def reset_parameters(self):
@@ -67,14 +68,22 @@ class ConditionalAutoencoderCC(torch.nn.Module):
             # z: (N, P), r_true: (N,)
             beta = self.beta(z)  # beta: (N, K)
             # CA model     --------------------------------------#
-            # x = torch.linalg.pinv(z.T @ z) @ z.T @ r_true  # x: (P, 1)
-            # factor = self.factor(x.view(1, -1))  # factor: (1, K)
-            # r_pred = beta @ factor.view(-1, 1)  # r_pred: (N, 1)
+            x = torch.linalg.pinv(z.T @ z) @ z.T @ r_true  # x: (P, 1)
+            factor = self.factor(x.view(1, -1))  # factor: (1, K)
+            r_pred = beta @ factor.view(-1, 1)  # r_pred: (N, 1)
+
             ## Hao's Model --------------------------------------#
-            x = torch.inverse(beta.T @ beta) @ beta.T @ r_true #x:(K, 1)
-            r_pred = beta @ x
-            #--------------------------------------#
-        
+            # x = torch.inverse(beta.T @ beta) @ beta.T @ r_true #x:(K, 1)
+            # r_pred = beta @ x
+
+            ##Conditional --------------------------------------#
+            # x = torch.linalg.pinv(z.T @ z) @ z.T @ r_true  # x: (P, 1)
+            # t = torch.inverse(beta.T @ beta) @ beta.T @ r_true # t:( K,1)
+            # m = torch.cat((x, t), 0)  # m:(P+K,1)
+            # confactor = self.conditionalfactor(m.view(1,-1))  # confactor(1,K)
+            # r_pred = beta @ confactor.view(-1,1)
+
+
             loss += self.loss_fn(r_pred, r_true)
             r_preds.append(r_pred)
             num_batches += 1
