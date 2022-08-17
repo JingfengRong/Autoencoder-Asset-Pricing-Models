@@ -3,7 +3,7 @@ log_dir: log
 seeds: [233, 42, 1135]
 data:
   path: twlvsplit
-  num_workers: 4
+  num_workers: 2
 model: 
   name: ConditionalAutoencoderCC
   in_channels: 79
@@ -12,7 +12,7 @@ model:
   # hidden_channels: [32, 6]
   # CACC
   out_channels: 1
-  hidden_channels: [32, 16, 5]
+  hidden_channels: [32, 16, 4]
   dropout: 0.1
   device: "cuda:0"
   # device: cpu
