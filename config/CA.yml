@@ -1,6 +1,7 @@
 title: CCA
 log_dir: log
-seeds: [42,1135,233]
+# seeds: [1135,42,233]
+seeds: [1135,233]
 data:
   path: twlvsplit
   num_workers: 2
@@ -12,7 +13,7 @@ model:
   # hidden_channels: [32, 6]
   # CACC
   out_channels: 6
-  hidden_channels: [32, 16,8]
+  hidden_channels: [32, 16, 6]
   dropout: 0.1
   device: "cuda:0"
   # device: cpu
