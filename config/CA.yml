@@ -14,13 +14,13 @@ model:
   # CACC
   out_channels: 6
   hidden_channels: [32, 16, 6]
-  dropout: 0.1
+  dropout: 0.3
   device: "cuda:0"
   # device: cpu
   loss_fn: MSELoss
 optimizer:
   name: Adam
-  lr: 0.01
+  lr: 0.005
   scheduler: exp
 train:
   batch_size: 16
