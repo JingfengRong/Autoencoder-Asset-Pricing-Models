@@ -1,7 +1,7 @@
 title: CCA
 log_dir: log
 # seeds: [1135,42,233]
-seeds: [1135]
+seeds: [305]
 data:
   path: twlvsplit
   num_workers: 2
@@ -9,11 +9,11 @@ model:
   name: ConditionalAutoencoderCC
   in_channels: 79
   # Hao Model
-  out_channels: 6
-  hidden_channels: 1
-  # CACC
   # out_channels: 6
-  # hidden_channels: [32, 16, 6]
+  # hidden_channels: 1
+  # CACC
+  out_channels: 6
+  hidden_channels: [32, 16, 6]
   dropout: 0.1
   device: "cuda:0"
   # device: cpu
@@ -24,6 +24,6 @@ optimizer:
   scheduler: exp
 train:
   batch_size: 16
-  num_epochs: 100
+  num_epochs: 1000
   drop_last: False
 evaluator: r2_total
