@@ -24,6 +24,6 @@ optimizer:
   scheduler: exp
 train:
   batch_size: 16
-  num_epochs: 1000
+  num_epochs: 100
   drop_last: False
 evaluator: r2_total
