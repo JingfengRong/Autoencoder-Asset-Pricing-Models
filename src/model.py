@@ -31,8 +31,8 @@ class MLP(torch.nn.Module):
         for i, lin in enumerate(self.lins[:-1]):
             x = lin(x)
             x = self.bns[i](x)
-            x = F.relu(x)
-            x = F.dropout(x, p=self.dropout, training=self.training)
+            # x = F.relu(x)
+            # x = F.dropout(x, p=self.dropout, training=self.training)
         x = self.lins[-1](x)
         if self.loss_fn is not None and self.return_dict and y_true is not None:
             x = x.flatten()
