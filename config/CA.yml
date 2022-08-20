@@ -10,7 +10,7 @@ model:
   in_channels: 79
   # Hao Model
   out_channels: 6
-  hidden_channels: 2
+  hidden_channels: 1
   # CACC
   # out_channels: 6
   # hidden_channels: [32, 16, 6]
