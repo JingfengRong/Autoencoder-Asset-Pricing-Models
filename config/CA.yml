@@ -20,10 +20,10 @@ model:
   loss_fn: MSELoss
 optimizer:
   name: Adam
-  lr: 0.001
+  lr: 0.0005
   scheduler: exp
 train:
   batch_size: 16
-  num_epochs: 1000
+  num_epochs: 700
   drop_last: False
 evaluator: r2_total
