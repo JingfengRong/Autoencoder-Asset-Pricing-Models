@@ -21,7 +21,7 @@ model:
 optimizer:
   name: Adam
   lr: 0.0005
-  scheduler: exp
+  scheduler: cos
 train:
   batch_size: 16
   num_epochs: 700
