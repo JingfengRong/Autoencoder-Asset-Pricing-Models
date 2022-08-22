@@ -138,6 +138,8 @@ for j in range(0, xs[0].shape[1]):
 all_grade = sum(fimp_metric_dict.values())
 result = {key: value / all_grade for key, value in fimp_metric_dict.items()}
 sort_result = sorted(result.items(), key=lambda x: x[1], reverse=True)
+#save dict
+np.save('sort_result.npy', sort_result) 
 
 # plot
 labels, ys = zip(*sort_result[0:15])
@@ -150,7 +152,6 @@ plt.barh(xs, ys)
 plt.yticks(xs, labels)
 
 # Show graphic
-plt.show()
 plt.gca().invert_yaxis()
 plt.savefig('featureimp.png')
 # plt.barh(xs, ys)
