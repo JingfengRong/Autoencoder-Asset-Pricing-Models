@@ -17,15 +17,18 @@ def seed_all(seed):
     torch.backends.cudnn.benchmark = False
 
 
-def load_config():
+def load_config(path=None):
     """
     Loads the config file.
     """
     import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--config', type=str)
-    args = parser.parse_args()
-    config_file = args.config
+    if path is None:
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--config', type=str)
+        args = parser.parse_args()
+        config_file = args.config
+    else:
+        config_file = path
     import yaml
     with open(config_file, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
