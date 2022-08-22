@@ -46,50 +46,54 @@ class MLP(torch.nn.Module):
         return cls(config.model.in_channels, config.model.hidden_channels,
                    config.model.out_channels, config.model.dropout, loss_fn)
 
-# class IPCA(torch.nn.Module):
-#     def __init__(self, in_channels, hidden_channels,
-#                  loss_fn=None, return_dict=True):
-#         super(IPCA, self).__init__()
+class IPCA(torch.nn.Module):
+    def __init__(self, in_channels, hidden_channels,
+                 loss_fn=None, return_dict=True):
+        super(IPCA, self).__init__()
 
-#         self.lins = torch.nn.Linear(in_channels, hidden_channels)
-#         self.bns = torch.nn.BatchNorm1d(hidden_channels)
-#         self.loss_fn = loss_fn
-#         self.return_dict = return_dict
+        self.lins = torch.nn.Linear(in_channels, hidden_channels)
+        self.bns = torch.nn.BatchNorm1d(hidden_channels)
+        self.loss_fn = loss_fn
+        self.return_dict = return_dict
 
-#     def reset_parameters(self):
-#         for lin in self.lins:
-#             lin.reset_parameters()
-#         for bn in self.bns:
-#             bn.reset_parameters()
+    def reset_parameters(self):
+        for lin in self.lins:
+            lin.reset_parameters()
+        for bn in self.bns:
+            bn.reset_parameters()
 
-#     def forward(self, x, y_true=None):
-#         x = self.lins(x)
-#         x = self.bns(x)
-#         if self.loss_fn is not None and self.return_dict and y_true is not None:
-#             x = x.flatten()
-#             return {"loss": self.loss_fn(x, y_true), "y_pred": x}
-#         else:
-#             return x
+    def forward(self, x, y_true=None):
+        x = self.lins(x)
+        x = self.bns(x)
+        if self.loss_fn is not None and self.return_dict and y_true is not None:
+            x = x.flatten()
+            return {"loss": self.loss_fn(x, y_true), "y_pred": x}
+        else:
+            return x
 
-#     @ classmethod
-#     def from_config(cls, config):
-#         loss_fn = create_loss_fn(config)
-#         return cls(config.model.in_channels, config.model.hidden_channels,
-#                    loss_fn)
+    @ classmethod
+    def from_config(cls, config):
+        loss_fn = create_loss_fn(config)
+        return cls(config.model.in_channels, config.model.hidden_channels,
+                   loss_fn)
 
 
 class ConditionalAutoencoderCC(torch.nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels, dropout, loss_fn):
+    def __init__(self, in_channels, hidden_channels, out_channels, loss_fn):
         super(ConditionalAutoencoderCC, self).__init__()
 
         # self.beta = IPCA(
         #     in_channels, hidden_channels, return_dict=False)
         # self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
 
-        self.beta = MLP(
-            in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
-        self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
+        # self.beta = MLP(
+        #     in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
+        # self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
         # self.conditionalfactor = torch.nn.Linear(in_channels + hidden_channels[-1], hidden_channels[-1])
+        self.beta = IPCA(
+            in_channels, hidden_channels, return_dict=False)
+        self.factor = torch.nn.Linear(in_channels, hidden_channels)
+
         self.loss_fn = loss_fn
 
     def reset_parameters(self):

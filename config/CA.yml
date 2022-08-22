@@ -10,21 +10,21 @@ model:
   name: ConditionalAutoencoderCC
   in_channels: 79
   # Hao Model
-  # out_channels: 6
-  # hidden_channels: 1
-  # CACC
   out_channels: 6
-  hidden_channels: [32,16,8,6]
+  hidden_channels: 6
+  # CACC
+  # out_channels: 6
+  # hidden_channels: [32,16,8,6]
   dropout: 0.1
   device: "cuda:0"
   # device: cpu
   loss_fn: MSELoss
 optimizer:
   name: Adam
-  lr: 0.005
+  lr: 0.002
   scheduler: exp
 train:
   batch_size: 16
-  num_epochs: 800
+  num_epochs: 600
   drop_last: False
 evaluator: r2_total
