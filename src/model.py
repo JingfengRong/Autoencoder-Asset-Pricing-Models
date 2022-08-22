@@ -79,20 +79,20 @@ class IPCA(torch.nn.Module):
 
 
 class ConditionalAutoencoderCC(torch.nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels, loss_fn):
+    def __init__(self, in_channels, hidden_channels, out_channels, dropout, loss_fn):
         super(ConditionalAutoencoderCC, self).__init__()
 
         # self.beta = IPCA(
         #     in_channels, hidden_channels, return_dict=False)
         # self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
 
-        # self.beta = MLP(
-        #     in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
-        # self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
+        self.beta = MLP(
+            in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
+        self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
         # self.conditionalfactor = torch.nn.Linear(in_channels + hidden_channels[-1], hidden_channels[-1])
-        self.beta = IPCA(
-            in_channels, hidden_channels, return_dict=False)
-        self.factor = torch.nn.Linear(in_channels, hidden_channels)
+        # self.beta = IPCA(
+        #     in_channels, hidden_channels, return_dict=False)
+        # self.factor = torch.nn.Linear(in_channels, hidden_channels)
 
         self.loss_fn = loss_fn
 
@@ -132,8 +132,8 @@ class ConditionalAutoencoderCC(torch.nn.Module):
     @classmethod
     def from_config(cls, config):
         loss_fn = create_loss_fn(config)
-        return cls(config.model.in_channels, config.model.hidden_channels, config.model.dropout, loss_fn)
-        # return cls(config.model.in_channels, config.model.hidden_channels, config.model.out_channels, config.model.dropout, loss_fn)
+        # return cls(config.model.in_channels, config.model.hidden_channels, config.model.dropout, loss_fn)
+        return cls(config.model.in_channels, config.model.hidden_channels, config.model.out_channels, config.model.dropout, loss_fn)
 
 # #------------------------------------------------------------------------------------------------------
 # class ConditionalAutoencoderCC(torch.nn.Module):
