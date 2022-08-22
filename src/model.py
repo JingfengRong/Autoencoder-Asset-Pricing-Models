@@ -132,7 +132,8 @@ class ConditionalAutoencoderCC(torch.nn.Module):
     @classmethod
     def from_config(cls, config):
         loss_fn = create_loss_fn(config)
-        return cls(config.model.in_channels, config.model.hidden_channels, config.model.out_channels, config.model.dropout, loss_fn)
+        return cls(config.model.in_channels, config.model.hidden_channels, config.model.dropout, loss_fn)
+        # return cls(config.model.in_channels, config.model.hidden_channels, config.model.out_channels, config.model.dropout, loss_fn)
 
 # #------------------------------------------------------------------------------------------------------
 # class ConditionalAutoencoderCC(torch.nn.Module):
