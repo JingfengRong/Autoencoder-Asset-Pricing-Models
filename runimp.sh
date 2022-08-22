@@ -1,0 +1,1 @@
+python src/featureim.py --config config/CA.yml

@@ -28,4 +28,5 @@ if __name__ == "__main__":
                           evaluator, device, logger, config)
         trainer.train()
         run.finish()
+    torch.save(model.state_dict(), config.savepoint)
     agg_res = agg_results(osp.join(config.log_dir, config.title))
