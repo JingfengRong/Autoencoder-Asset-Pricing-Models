@@ -2,7 +2,7 @@ title: CCA
 log_dir: log
 savepoint: savepoint/model.pt
 # seeds: [1135,42,233]
-seeds: [42,1135,233,305,721]
+seeds: [42,1135]
 data:
   path: twlvsplit
   num_workers: 2
