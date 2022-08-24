@@ -1,7 +1,7 @@
 title: CCA
 log_dir: log
 savepoint: savepoint/model.pt
-seeds: [1135,42]
+seeds: [1135,42,305,721]
 # seeds: [305,721]
 data:
   path: twlvsplit
@@ -25,6 +25,6 @@ optimizer:
   scheduler: exp
 train:
   batch_size: 16
-  num_epochs: 300
+  num_epochs: 100
   drop_last: False
 evaluator: r2_total
