@@ -14,7 +14,7 @@ model:
   # hidden_channels: 6
   # CACC
   out_channels: 6
-  hidden_channels: [32,16,6]
+  hidden_channels: [32,16,5]
   dropout: 0.1
   device: "cuda:0"
   # device: cpu
@@ -25,6 +25,6 @@ optimizer:
   scheduler: exp
 train:
   batch_size: 16
-  num_epochs: 80
+  num_epochs: 150
   drop_last: False
 evaluator: r2_total
