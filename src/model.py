@@ -55,6 +55,7 @@ class IPCA(torch.nn.Module):
         self.bns = torch.nn.BatchNorm1d(hidden_channels)
         self.loss_fn = loss_fn
         self.return_dict = return_dict
+        self.dropout = dropout
 
     def reset_parameters(self):
         for lin in self.lins:
@@ -65,8 +66,8 @@ class IPCA(torch.nn.Module):
     def forward(self, x, y_true=None):
         x = self.lins(x)
         x = self.bns(x)
-        x = F.relu(x)
-        x = F.dropout(x, p=self.dropout, training=self.training)
+        # x = F.relu(x)
+        # x = F.dropout(x, p=self.dropout, training=self.training)
         if self.loss_fn is not None and self.return_dict and y_true is not None:
             x = x.flatten()
             return {"loss": self.loss_fn(x, y_true), "y_pred": x}
@@ -86,8 +87,8 @@ class ConditionalAutoencoderCC(torch.nn.Module):
         super(ConditionalAutoencoderCC, self).__init__()
 
         self.beta = IPCA(
-            in_channels, hidden_channels, return_dict=False)
-        self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
+            in_channels, hidden_channels, dropout, return_dict=False)
+        self.factor = torch.nn.Linear(in_channels, hidden_channels)
 
         # self.beta = MLP(
         #     in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
@@ -111,13 +112,14 @@ class ConditionalAutoencoderCC(torch.nn.Module):
             # z: (N, P), r_true: (N,)
             beta = self.beta(z)  # beta: (N, K)
             # CA model     --------------------------------------#
-            # x = torch.linalg.pinv(z.T @ z) @ z.T @ r_true  # x: (P, 1)
-            # factor = self.factor(x.view(1, -1))  # factor: (1, K)
-            # r_pred = beta @ factor.view(-1, 1)  # r_pred: (N, 1)
+            x = torch.linalg.pinv(z.T @ z) @ z.T @ r_true  # x: (P, 1)
+            factor = self.factor(x.view(1, -1))  # factor: (1, K)
+            r_pred = beta @ factor.view(-1, 1)  # r_pred: (N, 1)
 
             # Hao's Model --------------------------------------#
-            x = torch.inverse(beta.T @ beta) @ beta.T @ r_true #x:(K, 1)
-            r_pred = beta @ x
+            # x = torch.inverse(beta.T @ beta) @ beta.T @ r_true #x:(K, 1)
+            # x = torch.linalg.pinv(beta.T @ beta) @ beta.T @ r_true #x:(K, 1)
+            # r_pred = beta @ x
 
             ##Conditional --------------------------------------#
             # x = torch.linalg.pinv(z.T @ z) @ z.T @ r_true  # x: (P, 1)
