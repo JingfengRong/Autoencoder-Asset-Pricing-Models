@@ -47,7 +47,7 @@ class MLP(torch.nn.Module):
                    config.model.out_channels, config.model.dropout, loss_fn)
 
 class IPCA(torch.nn.Module):
-    def __init__(self, in_channels, hidden_channels,
+    def __init__(self, in_channels, hidden_channels, dropout,
                  loss_fn=None, return_dict=True):
         super(IPCA, self).__init__()
 
@@ -65,6 +65,8 @@ class IPCA(torch.nn.Module):
     def forward(self, x, y_true=None):
         x = self.lins(x)
         x = self.bns(x)
+        x = F.relu(x)
+        x = F.dropout(x, p=self.dropout, training=self.training)
         if self.loss_fn is not None and self.return_dict and y_true is not None:
             x = x.flatten()
             return {"loss": self.loss_fn(x, y_true), "y_pred": x}
@@ -79,16 +81,17 @@ class IPCA(torch.nn.Module):
 
 
 class ConditionalAutoencoderCC(torch.nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels, dropout, loss_fn):
+    # def __init__(self, in_channels, hidden_channels, out_channels, dropout, loss_fn):
+    def __init__(self, in_channels, hidden_channels, dropout, loss_fn):
         super(ConditionalAutoencoderCC, self).__init__()
 
-        # self.beta = IPCA(
-        #     in_channels, hidden_channels, return_dict=False)
-        # self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
-
-        self.beta = MLP(
-            in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
+        self.beta = IPCA(
+            in_channels, hidden_channels, return_dict=False)
         self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
+
+        # self.beta = MLP(
+        #     in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
+        # self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
         # self.conditionalfactor = torch.nn.Linear(in_channels + hidden_channels[-1], hidden_channels[-1])
         # self.beta = IPCA(
         #     in_channels, hidden_channels, return_dict=False)
@@ -132,8 +135,8 @@ class ConditionalAutoencoderCC(torch.nn.Module):
     @classmethod
     def from_config(cls, config):
         loss_fn = create_loss_fn(config)
-        # return cls(config.model.in_channels, config.model.hidden_channels, config.model.dropout, loss_fn)
-        return cls(config.model.in_channels, config.model.hidden_channels, config.model.out_channels, config.model.dropout, loss_fn)
+        return cls(config.model.in_channels, config.model.hidden_channels, config.model.dropout, loss_fn)
+        # return cls(config.model.in_channels, config.model.hidden_channels, config.model.out_channels, config.model.dropout, loss_fn)
 
 # #------------------------------------------------------------------------------------------------------
 # class ConditionalAutoencoderCC(torch.nn.Module):
