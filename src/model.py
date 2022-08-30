@@ -86,13 +86,13 @@ class ConditionalAutoencoderCC(torch.nn.Module):
     def __init__(self, in_channels, hidden_channels, dropout, loss_fn):
         super(ConditionalAutoencoderCC, self).__init__()
 
-        self.beta = IPCA(
-            in_channels, hidden_channels, dropout, return_dict=False)
-        self.factor = torch.nn.Linear(in_channels, hidden_channels)
+        # self.beta = IPCA(
+        #     in_channels, hidden_channels, dropout, return_dict=False)
+        # self.factor = torch.nn.Linear(in_channels, hidden_channels)
 
-        # self.beta = MLP(
-        #     in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
-        # self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
+        self.beta = MLP(
+            in_channels, hidden_channels[:-1], hidden_channels[-1], dropout, return_dict=False)
+        self.factor = torch.nn.Linear(in_channels, hidden_channels[-1])
         # self.conditionalfactor = torch.nn.Linear(in_channels + hidden_channels[-1], hidden_channels[-1])
         # self.beta = IPCA(
         #     in_channels, hidden_channels, return_dict=False)
